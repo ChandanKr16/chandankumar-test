@@ -54,3 +54,23 @@ def numbers(request):
         numbers_set = set(numbers_list)
 
         return Response(sorted(numbers_set))
+
+
+keyword_list = ['bonfire', 'cardio', 'case', 'character', 'bonsai']
+
+
+@api_view(['GET'])
+def prefixes(request):
+    response_dict = []
+
+    if 'keyword' in request.GET:
+        keyword = request.GET['keyword']
+        url_keyword_list = keyword.split(',')
+
+        for keyword in url_keyword_list:
+            if keyword not in keyword_list:
+                response_dict.append(dict({'keyword': keyword, 'status': 'not_found', 'prefix': 'not_applicable'}))
+            else:
+                response_dict.append(dict({'keyword':keyword, 'status': 'found', 'prefix': keyword}))
+
+    return Response(response_dict)
