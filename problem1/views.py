@@ -1,10 +1,7 @@
-from django.shortcuts import render
 import requests
 from requests.exceptions import HTTPError
-from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import status
 import re
 
 
@@ -27,7 +24,6 @@ def get_response(url):
         return dict(jsonResponse)
 
     except HTTPError as http_err:
-        print("service unvailable: " + url)
         return None
     except Exception as e:
         return None
@@ -52,7 +48,6 @@ def numbers(request):
 
         for url in valid_url_list:
             response = get_response(url)
-            print(response)
             if response is not None:
                 numbers_list += response['numbers']
 
